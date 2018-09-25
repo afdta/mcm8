@@ -1,6 +1,7 @@
 import dir from "../../../js-modules/rackspace.js";
 import degradation from "../../../js-modules/degradation.js";
 
+import chart from "./chart.js";
 
 //main function
 function main(){
@@ -20,7 +21,7 @@ function main(){
 
   //browser degradation
   if(compat.browser()){
-    //run app...
+    chart(document.getElementById("middle-class-bars"));
   }
 
 
