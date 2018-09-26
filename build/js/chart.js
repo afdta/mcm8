@@ -78,7 +78,8 @@ export default function chart(container){
     var pos_scale = d3.scaleOrdinal().domain(positions).range([1, 21, 41, 61, 81]).unknown(100);
     var col_scale = d3.scaleOrdinal().domain(positions).range(['#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177']); //credit: http://colorbrewer2.org
     var col_scale_text = function(v){
-        return v=="lo" || v=="lomid" || v=="mid" ? "#111111" : "#eeeeee";
+        //return v=="lo" || v=="lomid" || v=="mid" ? "#111111" : "#eeeeee";
+        return v=="lo" ? "#111111" : "#eeeeee";
     }
     var names = {
         lo:"Lower",
