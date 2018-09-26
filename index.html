@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>MPP Interactive Feature</title>
   <meta name="author" content="Alec Friedhoff">
-
+  <link href="https://fonts.googleapis.com/css?family=PT+Serif:400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="app.css">
   <script src="app.js" type="text/javascript"></script>
 
@@ -12,7 +12,38 @@
     div{
       box-sizing:border-box;
     }
+
+    html{
+      font-family: 'PT Serif', serif;
+      font-size:18px;
+      color:#333333;
+      fill:#333333;
+    }
+
+    body{
+      background-color:#fafafa;
+    }
+
+    div.sort-descending > p:after{
+      content: "▼";
+      margin-left:3px;
+    }
+
+    div.sort-ascending > p:after{
+      content: "▲";
+      margin-left:3px;
+    }
+
+    div.toggle-button:hover > p{
+      transform:translateY(-2px);
+    }
+
+    /*div.toggle-button:active > p{
+      transform:translateY(3px);
+    }*/
+
   </style>
+
 </head>
 
 <body>
