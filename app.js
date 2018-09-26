@@ -245,13 +245,37 @@
 	};
 
 	function chart(container){
-	    var wrap = d3.select(container).style("min-width","360px").style("max-width","1200px")
-	                 .style("margin","0px auto").style("position","relative").style("padding","68px 0px 0px 0px");
+
+	    var outer_wrap = d3.select(container).style("min-width","360px").style("max-width","1200px").style("width","100%").style("min-height","50vh")
+	                            .style("margin","0px auto").style("padding","0px 10px 0px 10px").style("border","1px solid #aaaaaa")
+	                            .style("border-width","1px 0px").classed("outer-wrap",true);
+
+	    var filter_wrap0 = outer_wrap.append("div").style("text-align","center");
+	    var filter_wrap = filter_wrap0.append("div").classed("c-fix",true).style("padding","15px 0px 5px 0px").style("display","inline-block");
+	   
+	    filter_wrap.append("p").html("<em>Click on an income category to sort</em>&nbsp;▼")
+	                            .style("margin","0px 30px 0px 0px").style("float","left").style("padding","0px 0px");
+	   
+	    var input = filter_wrap.append("input").style("border","1px solid #aaaaaa")
+	                                           .style("border-width", "0px 0px 1px 0px")
+	                                           .style("outline","none")
+	                                           .style("padding","0px 12px")
+	                                           .style("margin","0px 0px 0px 0px")
+	                                           .style("background-color","none")
+	                                           .style("border-radius","0px")
+	                                           .style("float","left")
+	                                           .style("min-width","320px")
+	                                           .attr("placeholder",'Search (use commas to separate names)');
+
+	    var search_string = null;
+
+	    var wrap = outer_wrap.append("div").style("width","100%").style("position","relative").style("padding","75px 0px 0px 0px")
+	                        .style("max-height","80vh").style("overflow-y","scroll");
 	    
-	    var header_wrap = wrap.append("div").style("height","64px").style("width","100%")
-	                            .style("position","absolute").style("top","0px").style("left","0px")
-	                            .style("background-color","#fafafa");
-	    var button_wrap = header_wrap.append("div").style("width","100%").style("position","relative").style("height","32px");
+	    var header_wrap = wrap.append("div").style("height","75px").style("width","100%")
+	                            .style("position","absolute").style("top","0px").style("left","0px").style("background-color","#fafafa");
+
+	    var button_wrap = header_wrap.append("div").style("width","100%").style("position","relative").style("height","32px").style("margin-top","8px");
 	    var svg_axes = header_wrap.append("svg").attr("width","100%").attr("height","32px");
 	    
 	    var plot_wrap = wrap.append("div").style("width","100%").style("overflow", "visible");
@@ -263,8 +287,8 @@
 	    var g_front1 = svg.append("g");
 
 	    var bar_height = 12;
-	    var text_height = 29;
-	    var bar_pad = 19;
+	    var text_height = 35;
+	    var bar_pad = 13;
 
 	    function row_y(d,i){return i*(text_height+bar_height+bar_pad); }
 	    function row_translate(d,i){return "translate(0," + row_y(d,i) + ")"; }
@@ -297,7 +321,7 @@
 	    var pos_scale = d3.scaleOrdinal().domain(positions).range([1, 21, 41, 61, 81]).unknown(100);
 	    var col_scale = d3.scaleOrdinal().domain(positions).range(['#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177']); //credit: http://colorbrewer2.org
 	    var col_scale_text = function(v){
-	        return v=="lo" || v=="lomid" ? "#333333" : "#eeeeee";
+	        return v=="lo" || v=="lomid" || v=="mid" ? "#111111" : "#eeeeee";
 	    };
 	    var names = {
 	        lo:"Lower",
@@ -463,33 +487,56 @@
 	        resize_timer = setTimeout(window_resize, 150);
 	    });
 
-	    /*var scroll_throttle;
-	    var axis_top_pos = 0;
-	    window.addEventListener('scroll', function(){
-	        clearTimeout(scroll_throttle);
-	        header_wrap.interrupt().transition().duration(0).style("opacity", axis_top_pos != 0 ? "0" : "1");
-	        scroll_throttle = setTimeout(function(){
+	    wrap.node().addEventListener('scroll', function(){
+	        try{
+	            var top = !this.scrollTop ? 0 : this.scrollTop;
+	            
+	        }
+	        catch(e){
 	            var top = 0;
+	        }
+
+	        header_wrap.style("top", top+"px").style("border-bottom", top > 0 ? "1px solid #aaaaaa" : "none");
+	    });
+
+	    input.on("change", input_event_handler).on("input", input_event_handler);
+
+	    var input_timer;
+	    function input_event_handler(d){
+	        var v = (this.value+"");
+	        var vsplit = v.split(",").map(function(s){return s.replace(/^\s*|\s*$/g, "")})
+	                                 .filter(function(s){return s != ""});
+
+	        var vfinal = vsplit.join("|");
+	        
+	        clearTimeout(input_timer);
+	        input_timer = setTimeout(function(){
 	            try{
-	                var box = wrap.node().getBoundingClientRect();
-	                if(box.top < 0 && box.bottom > 0){
-	                    top = -1*box.top;
+	                if(vfinal.length==0 || vfinal==""){
+	                    search_string = null;
+	                }
+	                else{
+	                    search_string = vfinal;
 	                }
 	            }
 	            catch(e){
-	    
+	                search_string = null;
 	            }
-	            header_wrap.style("top", top+"px").interrupt().transition().duration(100).style("opacity","1");
-	            axis_top_pos = top;
-	        }, 100);
-	    })
-	    */
+	    
+	            update();
+	        }, 50);
+	    }
 
 	    function update(){
 	        //mark appropriate button as descending
 	        group_labels.filter(function(d){return d===sortvar}).classed("sort-ascending", !sort_descending).classed("sort-descending", sort_descending);
 
-	        var sorted_data = data_array.slice(0).sort(sort_descending ? descending : ascending);
+	        var rgxp = search_string === null ? null : new RegExp(search_string, "i");
+
+	        var sorted_data = data_array.slice(0).sort(sort_descending ? descending : ascending)
+	                                    .filter(function(d){
+	                                        return rgxp===null ? true : d.geo.name.search(rgxp) > -1;
+	                                    });
 
 	        svg.attr("height", sorted_data.length * (bar_height+text_height+bar_pad));
 
@@ -528,6 +575,7 @@
 	                .style("font-size","13px")
 	                .style("font-weight","normal")
 	                .attr("text-anchor","end")
+	                .style("font-weight", function(d){return d.pos==sortvar ? "bold" : "normal"})
 	                .attr("fill", function(d){return col_scale_text(d.pos)})
 	                .text(function(d){return share_format(d.share)});    
 

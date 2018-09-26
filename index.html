@@ -16,8 +16,16 @@
     html{
       font-family: 'PT Serif', serif;
       font-size:18px;
-      color:#333333;
-      fill:#333333;
+      color:#111111;
+      line-height:1.5em;
+    }
+
+    #metro-interactive text, #metro-interactive p, #metro-interactive input{
+      font-family: 'PT Serif', serif;
+      fill:"#111111";
+      color:"#111111";
+      font-size:16px;
+      line-height:1.5em;
     }
 
     body{
@@ -42,18 +50,34 @@
       transform:translateY(3px);
     }*/
 
+    .c-fix:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
   </style>
 
 </head>
 
 <body>
 <div id="metro-interactive">
-  <div style="max-width:1200px;margin:0px auto;">
-    <h2>Share of metro area households by income categories</h2>
-    <p><em>Income categories are based on national thresholds, but are adjusted to reflect local prices and household structure. [How to boil this down so it's intuitive]</em></p>
-    <p><em>Click on a header to sort</em></p>
+  <div style="max-width:700px;margin:2px auto;">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc diam erat, vestibulum sed dapibus vitae, cursus vel metus. Ut efficitur finibus massa, nec finibus tortor faucibus id. In varius sem quis dolor consectetur posuere. Quisque imperdiet imperdiet tempus. Sed gravida lobortis sapien vitae porttitor. Aliquam in sollicitudin augue. Sed sagittis augue et lorem interdum, quis ullamcorper nibh aliquet. Phasellus eu rhoncus ligula, id iaculis ex. Phasellus dolor dolor, luctus non risus ac, dictum laoreet ipsum. Suspendisse ut mauris enim.</p>
+    <p>Suspendisse id lorem nulla. Suspendisse quis erat eget nisl placerat interdum ac in metus. Donec in libero sit amet orci bibendum efficitur in id velit. Sed nec neque tristique, consectetur eros ornare, euismod leo. Aliquam ac nisl mi. Vestibulum gravida auctor leo aliquet maximus. Morbi ullamcorper ipsum id vehicula efficitur. Praesent tortor ex, vestibulum nec libero a, ullamcorper congue metus. Sed convallis ultricies vulputate. Proin ac enim dignissim, mattis ante sed, tincidunt purus. Mauris a consectetur diam. Maecenas non felis id sapien lacinia fermentum ac at nulla.</p>
   </div>
+
+  <div style="max-width:1200px;margin:4rem auto 0px auto;">
+    <h2>Share of metro area households by income category</h2>
+    <p><em>Income categories are based on national thresholds, but adjusted to reflect local prices and household sizes. For instance, middle-income households in San Jose, Calif. earned between $64,000 and $102,000 in 2017, while those in Beckley, W.Va., earned between $35,000 and $56,000.</em></p>
+  </div>
+
   <div id="middle-class-bars"></div>
+
+  <div style="max-width:700px;margin:4rem auto;">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc diam erat, vestibulum sed dapibus vitae, cursus vel metus. Ut efficitur finibus massa, nec finibus tortor faucibus id. In varius sem quis dolor consectetur posuere. Quisque imperdiet imperdiet tempus. Sed gravida lobortis sapien vitae porttitor. Aliquam in sollicitudin augue. Sed sagittis augue et lorem interdum, quis ullamcorper nibh aliquet. Phasellus eu rhoncus ligula, id iaculis ex. Phasellus dolor dolor, luctus non risus ac, dictum laoreet ipsum. Suspendisse ut mauris enim.</p>
+      <p>Suspendisse id lorem nulla. Suspendisse quis erat eget nisl placerat interdum ac in metus. Donec in libero sit amet orci bibendum efficitur in id velit. Sed nec neque tristique, consectetur eros ornare, euismod leo. Aliquam ac nisl mi. Vestibulum gravida auctor leo aliquet maximus. Morbi ullamcorper ipsum id vehicula efficitur. Praesent tortor ex, vestibulum nec libero a, ullamcorper congue metus. Sed convallis ultricies vulputate. Proin ac enim dignissim, mattis ante sed, tincidunt purus. Mauris a consectetur diam. Maecenas non felis id sapien lacinia fermentum ac at nulla.</p>
+    </div>
 </div>
 </body>
 </html>
