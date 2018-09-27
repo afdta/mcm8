@@ -1,0 +1,149 @@
+  #metro-interactive{
+      margin:4rem auto;
+  }
+  
+  #metro-interactive div{
+    box-sizing:border-box;
+  }
+
+  #metro-interactive #middle-class-bars{
+    min-width:400px;
+    max-width:1200px;
+    width:100%;
+    min-height:300px;
+    min-height:50vh;
+    max-height:900px;
+    margin:0px auto;
+    padding:10px 10px 0px 10px;
+    border:1px solid #aaaaaa;
+    border-width:1px 0px;
+  }
+
+  #metro-interactive #middle-class-title-box{
+    padding:0px 10px;
+    max-width:1200px;
+    margin:0px auto;
+  }
+
+  #metro-interactive #middle-class-title-box > div{
+    width:98%;
+    margin:0px auto;
+  }
+
+  #metro-interactive #middle-class-title-box > div > p:first-child{
+    font-size:1.75em;
+    line-height:1.25em;
+    font-weight:bold;
+    margin:0px 0px 16px 0px
+  }
+
+  #metro-interactive text, #metro-interactive p, #metro-interactive input{
+    font-family: 'PT Serif', serif;
+    fill:"#111111";
+    color:"#111111";
+    font-size:16px;
+    line-height:1.5em;
+  }
+
+  #metro-interactive svg{
+    overflow:visible;
+  }
+
+  #metro-interactive div.sort-descending > p:after{
+    content: "▼";
+    margin-left:1px;
+  }
+
+  #metro-interactive div.sort-ascending > p:after{
+    content: "▲";
+    margin-left:1px;
+  }
+
+  #metro-interactive div.toggle-button{
+    padding:3px 10px;
+    height:32px;
+    vertical-align:middle;
+  }
+
+  #metro-interactive div.toggle-button > p{
+    display:inline-block;
+    line-height:1em;
+  }
+
+  #metro-interactive div.toggle-button:hover > p{
+    transform:translateY(-2px);
+  }
+
+  .c-fix:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  @media (min-width:0px){
+    #metro-interactive text, #metro-interactive p, #metro-interactive input{
+      font-size:14px;
+    }
+
+    #metro-interactive div.toggle-button > p{
+      font-size:13px;
+    }
+
+    #metro-interactive text.bar-label{
+      font-size:10px;
+    }
+
+    #metro-interactive div.toggle-button{
+      height:36px;
+      padding:3px 8px;
+    }
+
+  }
+
+  @media (min-width:480px){
+    #metro-interactive text, #metro-interactive p, #metro-interactive input{
+      font-size:15px;
+    }
+
+    #metro-interactive div.toggle-button > p{
+      font-size:14px;
+    }
+
+    #metro-interactive div.toggle-button{
+      padding:3px 10px;
+    }
+
+    #metro-interactive text.bar-label{
+      font-size:11px;
+    }
+
+  }
+
+  @media (min-width:800px){
+    #metro-interactive text, #metro-interactive p, #metro-interactive input, #metro-interactive div.toggle-button > p{
+      font-size:16px;
+    }
+
+    #metro-interactive text.bar-label{
+      font-size:12px;
+    }
+
+    #metro-interactive div.toggle-button{
+      height:32px;
+    }
+
+  }
+
+  @media (min-width:950px){
+    #metro-interactive text.bar-label{
+      font-size:13px;
+    }
+  }
+
+  @media (min-width:1200px){
+
+    #metro-interactive text.bar-label{
+      font-size:14px;
+    }
+
+  }

@@ -3,31 +3,31 @@ import format from "../../../js-modules/formats.js";
 
 export default function chart(container){
 
-    var outer_wrap = d3.select(container).style("min-width","360px").style("max-width","1200px").style("width","100%").style("min-height","50vh")
-                            .style("margin","0px auto").style("padding","0px 10px 0px 10px").style("border","1px solid #aaaaaa")
-                            .style("border-width","1px 0px").classed("outer-wrap",true);
+    var outer_wrap = d3.select(container).classed("outer-wrap",true);
 
     var filter_wrap0 = outer_wrap.append("div").style("text-align","center");
-    var filter_wrap = filter_wrap0.append("div").classed("c-fix",true).style("padding","15px 0px 5px 0px").style("display","inline-block");
-   
-    filter_wrap.append("p").html("<em>Click on an income category to sort</em>&nbsp;▼")
-                            .style("margin","0px 30px 0px 0px").style("float","left").style("padding","0px 0px");
+    var filter_wrap = filter_wrap0.append("div").classed("c-fix",true)
+                                  .style("padding","5px 0px 5px 0px")
+                                  .style("display","inline-block");
    
     var input = filter_wrap.append("input").style("border","1px solid #aaaaaa")
                                            .style("border-width", "0px 0px 1px 0px")
                                            .style("outline","none")
-                                           .style("padding","0px 12px")
-                                           .style("margin","0px 0px 0px 0px")
+                                           .style("padding","0px 4px")
+                                           .style("margin","10px 30px 0px 0px")
                                            .style("background-color","none")
                                            .style("border-radius","0px")
                                            .style("float","left")
                                            .style("min-width","320px")
                                            .attr("placeholder",'Search (use commas to separate names)');
+                                           
+    filter_wrap.append("p").html("<em>Click on an income category to sort</em>&nbsp;▼")
+                           .style("margin","10px 30px 0px 4px").style("float","left").style("padding","0px 0px");
 
     var search_string = null;
 
     var wrap = outer_wrap.append("div").style("width","100%").style("position","relative").style("padding","75px 0px 0px 0px")
-                        .style("max-height","80vh").style("overflow-y","scroll");
+                        .style("max-height","70vh").style("overflow-y","scroll");
     
     var header_wrap = wrap.append("div").style("height","75px").style("width","100%")
                             .style("position","absolute").style("top","0px").style("left","0px").style("background-color","#fafafa");
@@ -43,9 +43,10 @@ export default function chart(container){
     var g_front0 = svg.append("g");
     var g_front1 = svg.append("g");
 
-    var bar_height = 12;
+    var bar_height = 20; //plot area height
+    var actual_bar_height = 10; //actual bar height (smaller than bar_height)
     var text_height = 35;
-    var bar_pad = 13;
+    var bar_pad = 30;
 
     function row_y(d,i){return i*(text_height+bar_height+bar_pad); }
     function row_translate(d,i){return "translate(0," + row_y(d,i) + ")"; }
@@ -75,12 +76,9 @@ export default function chart(container){
     var share_format = d3.format(",.1%");
     var scale = d3.scaleLinear().domain([0,0.35]).range([0,16]);
     var positions = ["lo", "lomid", "mid", "upmid", "up"];
-    var pos_scale = d3.scaleOrdinal().domain(positions).range([1, 21, 41, 61, 81]).unknown(100);
+    var pos_scale = d3.scaleOrdinal().domain(positions).range([2, 22, 42, 62, 82]).unknown(100);
     var col_scale = d3.scaleOrdinal().domain(positions).range(['#fa9fb5','#f768a1','#dd3497','#ae017e','#7a0177']); //credit: http://colorbrewer2.org
-    var col_scale_text = function(v){
-        //return v=="lo" || v=="lomid" || v=="mid" ? "#111111" : "#eeeeee";
-        return v=="lo" ? "#111111" : "#eeeeee";
-    }
+
     var names = {
         lo:"Lower",
         lomid:"Lower middle",
@@ -103,13 +101,13 @@ export default function chart(container){
             .data(d3.range(0, data_array.length))
             .enter().append("rect")
             .attr("y", function(d,i){return row_y(d,i)+text_height-8})
-            .attr("x","0%")
+            .attr("x","1%")
             .attr("width","98%")
             .attr("fill","#e0e0e0")
             .attr("stroke","#ffffff")
             .attr("rx","6")
             .attr("ry","6")
-            .attr("height",bar_height+20);
+            .attr("height",bar_height+21);
 
     //grid/tick marks
     var grid_line_groups = g_front0.selectAll("g.grid-lines")
@@ -190,16 +188,13 @@ export default function chart(container){
                             .style("width", (scale.range()[1]+2) + "%")
                             .style("left", function(d){return (pos_scale(d)-1) + "%"})
                             .style("background-color", function(d){return col_scale(d)})
-                            .style("padding","10px 10px")
-                            .style("height","2rem")
                             .style("border-radius","12px")
                             .style("cursor","pointer")
                             .classed("toggle-button",true)
                             
     group_labels.append("p").text(function(d){return names[d]})
-                            .style("color","#ffffff")
+                            .style("color",function(d){return d=="lo" || d=="lomid" ? "#111111" : "#ffffff"})
                             .style("margin","0px")
-                            .style("line-height","1em")
                             .style("user-select","none")
                             ;
 
@@ -282,6 +277,14 @@ export default function chart(container){
             }
     
             update();
+
+            try{
+                wrap.node().scrollTop = 0;
+                header_wrap.style("top", "0px");
+            }
+            catch(e){
+
+            }
         }, 50)
     }
 
@@ -313,9 +316,9 @@ export default function chart(container){
         
         var bars = bars_u.enter().append("rect").merge(bars_u);
             bars.attr("x", function(d){return pos_scale(d.pos)+"%"})
-                .attr("y", text_height)
+                .attr("y", text_height + bar_height - actual_bar_height)
                 .attr("width", function(d){return scale(d.share)+"%"})
-                .attr("height", bar_height)
+                .attr("height", actual_bar_height)
                 .attr("fill", function(d){return col_scale(d.pos)});
 
         //bar labels
@@ -325,16 +328,13 @@ export default function chart(container){
 
         barlab_u.exit().remove();
         
+        var bar_label_threshold = 0.175;
         var barlab = barlab_u.enter().append("text").classed("bar-label",true).merge(barlab_u);
             barlab.attr("x", function(d){return (pos_scale(d.pos) + scale(d.share))+"%"})
-                .attr("dx", "-2")
-                .attr("y", text_height+bar_height)
-                .attr("dy","-1")
-                .style("font-size","13px")
-                .style("font-weight","normal")
                 .attr("text-anchor","end")
-                .style("font-weight", function(d){return d.pos==sortvar ? "bold" : "normal"})
-                .attr("fill", function(d){return col_scale_text(d.pos)})
+                .attr("dx","3")
+                .attr("y", text_height+bar_height-actual_bar_height)
+                .attr("dy","-1")
                 .text(function(d){return share_format(d.share)});    
 
         //group (cbsa) labels        
@@ -349,7 +349,6 @@ export default function chart(container){
                 .attr("y", text_height)
                 .attr("dy","-11")
                 .attr("fill", "#333333")
-                .style("font-size","16px")
                 .style("font-weight","bold")
                 .text(function(d){return d.rank + ". " + d.name});
         
