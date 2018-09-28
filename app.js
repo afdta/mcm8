@@ -11,47 +11,6 @@
 
 	//directory
 
-	var dir = {
-		rackspace: 'https://c24215cec6c97b637db6-9c0895f07c3474f6636f95b6bf3db172.ssl.cf1.rackcdn.com/interactives/2018',
-		ts: (new RegExp("^/|/$", "g")),
-		ds: (new RegExp("/{2,}", "g")),
-		folders: {}
-	};
-
-	dir.local = function(root_directory){
-		if(arguments.length > 0){
-			dir.rackspace = root_directory.replace(this.ts, "");
-		}
-		else{
-			dir.rackspace = ".";
-		}
-		return this;
-	};
-
-	dir.add = function(name, relative_path){
-		if(arguments.length==1){
-			dir.folders[name] = name.replace(this.ts, "");
-		}
-		else if(arguments.length > 1){
-			dir.folders[name] = relative_path.replace(this.ts, "");
-		}
-		return this;
-	};
-
-	dir.url = function(name, file_name){
-		if(arguments.length==0){
-			var path = dir.rackspace;
-		}
-		else if(arguments.length==1){
-			var path = dir.rackspace + "/" + name;
-		}
-		else{
-			var path = dir.rackspace + "/" + dir.folders[name] + "/" + file_name;
-		}
-
-		return path;
-	};
-
 	function degradation(root){
 		
 		if(arguments.length==0){
@@ -603,16 +562,6 @@
 	//main function
 	function main(){
 
-
-	  //local
-	  dir.local("./");
-	  //dir.add("dirAlias", "path/to/dir");
-	  //dir.add("dirAlias", "path/to/dir");
-
-
-	  //production data
-	  //dir.add("dirAlias", "rackspace-slug/path/to/dir");
-	  //dir.add("dirAlias", "rackspace-slug/path/to/dir");
 	  var compat = degradation(document.getElementById("metro-interactive"));
 
 
