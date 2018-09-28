@@ -9,13 +9,9 @@ col_names <- c("affid","cbsa","name",
                "brklomid00","brkmid00","brkupmid00","brkup00")
 
 data <- read_xlsx("/home/alec/Projects/Brookings/middle-class-in-metros/build/data/2017 metro middle class charts.xlsx", 
-                   sheet="data for interactive", skip=2, col_names = col_names) %>% mutate(cut17=cut(shlomid17+shmid17+shupmid17, breaks=6))
+                   sheet="data for interactive", skip=2, col_names = col_names )
 
 data %>% summarise_at(c("shlo17","shlomid17","shmid17","shupmid17","shup17"), max)
-
-
-gg <- ggplot(data=data)
-gg + geom_point(aes(x=shup17, y=shlo17, color=shlomid17+shmid17+shupmid17), alpha=0.7) + facet_wrap("cut17", nrow=2)
 
 
 json <- data %>% as.data.frame() %>% 
@@ -33,3 +29,6 @@ json <- data %>% as.data.frame() %>%
 writeLines(c("var data = ", json, ";", "export default data;"), con="/home/alec/Projects/Brookings/middle-class-in-metros/build/js/data.js")
 
 names(data)
+
+gg <- ggplot(data=data)
+gg + geom_point(aes(x=shup17, y=shlo17, color=shlomid17+shmid17+shupmid17), alpha=0.7) + facet_wrap("cut17", nrow=2)
