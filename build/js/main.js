@@ -1,4 +1,3 @@
-import dir from "../../../js-modules/rackspace.js";
 import degradation from "../../../js-modules/degradation.js";
 
 import chart from "./chart.js";

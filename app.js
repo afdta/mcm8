@@ -9,8 +9,6 @@
 (function () {
 	'use strict';
 
-	//directory
-
 	function degradation(root){
 		
 		if(arguments.length==0){
