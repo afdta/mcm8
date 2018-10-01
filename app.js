@@ -432,23 +432,24 @@
 	        
 	    }
 
-
 	    window.addEventListener("resize", function(){
 	        clearTimeout(resize_timer);
 	        resize_timer = setTimeout(window_resize, 150);
 	    });
 
-	    wrap.node().addEventListener('scroll', function(){
+	    function scrollEvent(){
 	        try{
 	            var top = !this.scrollTop ? 0 : this.scrollTop;
-	            
 	        }
 	        catch(e){
 	            var top = 0;
 	        }
 
 	        header_wrap.style("top", top+"px").style("border-bottom", top > 0 ? "1px solid #aaaaaa" : "none");
-	    });
+	    }
+
+	    wrap.node().addEventListener('scroll', scrollEvent); 
+	    wrap.node().addEventListener('wheel', scrollEvent);
 
 	    input.on("change", input_event_handler).on("input", input_event_handler);
 
