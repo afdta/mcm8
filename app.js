@@ -227,7 +227,7 @@
 	    var search_string = null;
 
 	    var wrap = outer_wrap.append("div").style("width","100%").style("position","relative").style("padding","75px 0px 0px 0px")
-	                        .style("max-height","70vh").style("overflow","auto").style("overflow-y","scroll");
+	                        .style("max-height","70vh").style("overflow","auto");
 	    
 	    var header_wrap = wrap.append("div").style("height","75px").style("width","100%")
 	                            .style("position","absolute").style("top","0px").style("left","0px").style("background-color","#fafafa");
