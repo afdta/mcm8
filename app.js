@@ -227,7 +227,7 @@
 	    var search_string = null;
 
 	    var wrap = outer_wrap.append("div").style("width","100%").style("position","relative").style("padding","75px 0px 0px 0px")
-	                        .style("height","70vh").style("overflow","auto");
+	                        .style("min-height","70vh").style("height","350px").style("overflow","auto");
 	    
 	    var header_wrap = wrap.append("div").style("height","75px").style("width","100%")
 	                            .style("position","absolute").style("top","0px").style("left","0px").style("background-color","#fafafa");
@@ -235,7 +235,7 @@
 	    var button_wrap = header_wrap.append("div").style("width","100%").style("position","relative").style("height","32px").style("margin-top","8px");
 	    var svg_axes = header_wrap.append("svg").attr("width","100%").attr("height","32px");
 	    
-	    var plot_wrap = wrap.append("div").style("width","100%").style("overflow", "visible");
+	    var plot_wrap = wrap.append("div").style("width","100%").style("overflow", "hidden");
 	    var svg = plot_wrap.append("svg").attr("width","100%").style("overflow","visible");
 
 	    var g_back = svg.append("g");
