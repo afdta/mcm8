@@ -26,7 +26,7 @@ export default function chart(container){
 
     var search_string = null;
 
-    var wrap = outer_wrap.append("div").style("width","100%").style("position","relative").style("padding","75px 0px 0px 0px")
+    var wrap = outer_wrap.append("div").style("width","100%").style("position","relative").style("padding","75px 0px 0px 0px").style("min-height","300px")
                         .style("height","70vh").style("overflow","auto");
     
     var header_wrap = wrap.append("div").style("height","75px").style("width","100%")
@@ -91,7 +91,7 @@ export default function chart(container){
     ranks.lomid = format.ranker(data_array.map(function(d){return d.shares.y17.lomid}));
     ranks.mid = format.ranker(data_array.map(function(d){return d.shares.y17.mid}));
     ranks.upmid = format.ranker(data_array.map(function(d){return d.shares.y17.upmid}));
-    ranks.up = format.ranker(data_array.map(function(d){return d.shares.y17.up}));
+    ranks.up = format.ranker(data_array.map(function(d){return d.shares.y17.up}));""
 
     //basic chart elements -- one time draw
 
