@@ -30,11 +30,14 @@
     margin:0px auto;
   }
 
+  #metro-interactive #middle-class-title-box > div > p{
+    margin:0px 0px 16px 0px;
+  }
+
   #metro-interactive #middle-class-title-box > div > p:first-child{
     font-size:1.75em;
     line-height:1.25em;
     font-weight:bold;
-    margin:0px 0px 16px 0px
   }
 
   #metro-interactive text, #metro-interactive p, #metro-interactive input{
