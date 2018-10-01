@@ -41,7 +41,6 @@ export default function chart(container){
     var g_back = svg.append("g");
     var g_main = svg.append("g");
     var g_front0 = svg.append("g");
-    var g_front1 = svg.append("g");
 
     var bar_height = 20; //plot area height
     var actual_bar_height = 10; //actual bar height (smaller than bar_height)
@@ -328,7 +327,6 @@ export default function chart(container){
 
         barlab_u.exit().remove();
         
-        var bar_label_threshold = 0.175;
         var barlab = barlab_u.enter().append("text").classed("bar-label",true).merge(barlab_u);
             barlab.attr("x", function(d){return (pos_scale(d.pos) + scale(d.share))+"%"})
                 .attr("text-anchor","end")
